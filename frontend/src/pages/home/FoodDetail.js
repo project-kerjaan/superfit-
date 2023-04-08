@@ -18,7 +18,7 @@ const FoodDetail = () => {
                 <Link to="/home">
                  <i className="ri-arrow-left-line text-2xl"></i> 
                 </Link>
-                <h2 className='flex-1 mr-3 text-xl text-center font-bold mb-2 '>Recipe Details</h2>
+                <h2 className='flex-1 mr-8 text-xl text-center font-bold mb-2 '>Recipe Details</h2>
             </div>
             <div className="mt-5">
                 <img className="w-full h-[250px] rounded-lg" src={food?.display?.images[0]}/>

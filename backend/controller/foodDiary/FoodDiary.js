@@ -72,6 +72,14 @@ const DeleteDiary = async (req,res) => {
            const findMacros = await userMacros.findOne({user_id:userId});
 
            findUserCalories.calories_remaining = findUserCalories.calories_remaining - findDiary.calories;
+           findMacros.fat_count = findMacros.fat_count - findDiary.fat;
+           findMacros.carbohdyrates_count = findMacros.carbohdyrates_count - findDiary.carbo;
+           findMacros.protein_count = findMacros.protein_count - findDiary.protein;
+
+           await findUserCalories.save();
+           await findMacros.save();
+
+           return res.status(200).json({message:"success delete diary"});
         }
         return res.status(404).json({message:"diary is not found"});
     } catch(err) {

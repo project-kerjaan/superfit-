@@ -20,7 +20,8 @@ import {
   FoodDetail,
   Password,
   AddFoodDiary,
-  Friends
+  Friends,
+  MealPlan
 } from "./pages";
 import { closeAlert } from './slice/AlertSlice';
 import { useSelector, useDispatch } from 'react-redux';
@@ -76,7 +77,9 @@ function App() {
         </Route>
         
         //meal plan routing
-        <Route path="/meal-plan" element={<MainMealPlan/>}></Route>
+        <Route path="/meal-plan" element={<MainMealPlan/>}>
+          <Route index element={<MealPlan/>}/>
+        </Route>
       </Routes>
     </div>
   );

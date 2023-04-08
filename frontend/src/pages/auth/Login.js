@@ -30,12 +30,6 @@ const Login = () => {
     dispatch(loginHandler({ loginForm,dispatch  }));
   }
 
-  useEffect(() => {
-    if(auth.token) {
-       navigate('/home');
-    }
-  }, [auth])
-
   return (
     <section className="min-w-[27vw] mx-auto bg-white h-screen py-7 px-7">
         <Brand/>

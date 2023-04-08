@@ -10,6 +10,7 @@ const headers = {
 
 const EditProfile = () => {
    const { alert } = useSelector(state=>state);
+   const [loading,setLoading] = useState(false);
    const [profile,setProfile] = useState(null);
    const [open,setOpen] = useState(false);
 
@@ -34,6 +35,7 @@ const EditProfile = () => {
 
        if(data) {
           setProfile(data);
+          setOpen(false);
        }
    }
 
@@ -70,7 +72,7 @@ const EditProfile = () => {
                 </div>
                  <div className="flex justify-between items-center border-b py-2 border-gray-300">
                     <h5 className="text-md capitalize text-gray-500 font-semibold">Birthday</h5>
-                    <h5 className="text-md capitalize text-gray-500 font-semibold">{profile?.birthday} </h5>
+                    <h5 className="text-md capitalize text-gray-500 font-semibold">{new Date(profile?.birthday).toDateString()} </h5>
                     
                 </div>
                 <div className="flex justify-between items-center border-b py-2 border-gray-300">
@@ -99,8 +101,11 @@ const EditProfile = () => {
                     <input onChange={changeHandler} value={profile?.name} type="text" name="name" placeholder="Username" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
                     <input onChange={changeHandler} value={profile?.height} type="text" name="height" placeholder="Height" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
                     <input onChange={changeHandler} value={profile?.weight} type="text" name="weight" placeholder="Weight" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
-                    <input onChange={changeHandler} value={profile?.gender} type="text" name="gender" placeholder="Gender" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
                     <input onChange={changeHandler} value={profile?.birthday} type="date" name="birthday" placeholder="Birthday" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
+                    <select onChange={changeHandler} value={profile?.gender}>
+                        <option value="male">Male</option>
+                        <option value="female">Female</option>
+                    </select>
                     <input onChange={changeHandler} value={profile?.address} type="text" name="address" placeholder="Location" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
                     <input onChange={changeHandler} value={profile?.email} type="email" name="email" placeholder="Email" className="w-full rounded-md py-2 px-3 border border-gray-400"/>
                     <input onChange={changeHandler} value={profile?.phone} type="text" name="phone" placeholder="Phone" className="w-full rounded-md py-2 px-3 border border-gray-400"/>

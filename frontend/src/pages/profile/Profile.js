@@ -2,8 +2,8 @@ import { BottomBar } from '../../components';
 import images from '../../utils/images';
 import { useSelector,useDispatch } from 'react-redux';
 import { Link, useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-import { logoutHandler } from '../../slice/AuthSlice';
+import { useEffect,useState } from 'react';
+import { logoutHandler, updateAvatar } from '../../slice/AuthSlice';
 
 const Profile = () => {
    const navigate = useNavigate();
@@ -14,13 +14,26 @@ const Profile = () => {
     if(!auth.token) {
        navigate("/auth/login");
     }
-   }, [auth])
+   }, [auth]);
+
+   const imageHandler = (element) => {
+    let file = element.target.files[0];
+    let reader = new FileReader();
+    reader.onloadend = function() {
+       dispatch(updateAvatar({ file:reader.result,username:auth?.user?.name }));
+    }
+    reader.readAsDataURL(file);
+   }
+
 
     return (
-        <section className='relative py-5 px-7 w-[30vw] max-w-[30vw] min-h-screen bg-white mx-auto'>
+        <section className='relative py-5 px-7 w-[29vw] min-w-[30vw] min-h-screen bg-white mx-auto'>
            <h2 className='text-xl font-bold capitalize'>my profile</h2>
            <div className='flex items-center mt-5 gap-x-4'>
-            {auth?.user?.profile ? <img src={auth?.user?.profile} alt="profile"/> : <img src={images.user} alt="user" className='w-[60px] h-[60px] rounded-full'/>}
+            <input onChange={imageHandler} type="file" className='hidden' name="profile" id="profile"/>
+           <label for="profile" className='cursor-pointer'>
+           {auth?.user?.profile ? <img className='w-[70px] h-[70px] rounded-full' src={`${auth?.user?.profile}`} alt="profile"/> : <img src={images.user} alt="user" className='w-[60px] h-[60px] rounded-full'/>}
+           </label>
             <div>
                 <h4 className='text-xl font-bold'>{auth?.user?.name}</h4>
                 <p className='text-gray-500 text-sm  font-medium'>100 XP</p>

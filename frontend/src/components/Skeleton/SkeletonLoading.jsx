@@ -1,10 +1,17 @@
+import { useState } from "react";
 
-const SkeletonLoading = () => {
+const SkeletonLoading = ({ numberOfItems }) => {
+    const [items,setItems] = useState([]);
+
+    for(let i = 0; i < numberOfItems; i++) {
+        items.push(i);
+    }
+
     return (
         <div className="grid mt-5 grid-cols-3 gap-3">
-            <div className="skeleton-item w-full h-[150px] rounded-lg"></div>
-            <div className="skeleton-item w-full h-[150px] rounded-lg"></div>
-            <div className="skeleton-item w-full h-[150px] rounded-lg"></div>
+          {items.map((item, idx)=> (
+            <div key={idx} className="w-full h-[130px] rounded-lg skeleton-item"></div>
+          ))}
         </div>
     )
 }

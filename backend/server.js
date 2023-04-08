@@ -2,6 +2,7 @@ require('dotenv').config({debug:true});
 
 const express = require('express');
 const cors = require('cors');
+const cloudinary = require('cloudinary').v2;
 const mongoose = require('mongoose');
 
 const app = express();
@@ -11,6 +12,12 @@ const authRoutes = require("./routes/auth/AuthenticationRoutes");
 const profileRoutes = require("./routes/profile/Profile");
 const accountRoutes = require("./routes/settings/Setting");
 const foodDiaryRoutes = require("./routes/foodDiary/FoodDiary");
+
+cloudinary.config({
+    cloud_name: "dofjcahla",
+    api_key: "535534286139129",
+    api_secret: "KTf8dM5afX9DM-t_lgwhDDXZgRY"
+  });
 
 app.use(cors({
     origin:'*',

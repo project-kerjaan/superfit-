@@ -12,6 +12,7 @@ import EditProfile from "./settings/EditProfile";
 import FoodDetail from "./home/FoodDetail";
 import Password from "./settings/Password";
 import AddFoodDiary from "./foodDiary/AddFoodDiary";
+import MealPlan from "./mealPlan/MealPlan";
 import Friends from "./profile/Friends";
 
 import MainAuth from "./auth/MainAuth";
@@ -42,5 +43,6 @@ export {
     FoodDetail,
     Password,
     AddFoodDiary,
-    Friends
+    Friends,
+    MealPlan
 }

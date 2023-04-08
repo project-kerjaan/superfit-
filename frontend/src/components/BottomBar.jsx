@@ -16,7 +16,7 @@ const BottomBar = ({ page }) => {
                 <p className='text-[13px] font-medium'>Food Diary</p>
                 </button>
             </Link>
-            <Link to="/">
+            <Link to="/meal-plan">
                 <button className={`flex flex-col items-center  gap-y-1 ${page === "meal plan" ? "text-gray-200" : "text-gray-400"}`}>
                 <i className="ri-file-list-3-line text-xl"></i>
                 <p className='text-[13px] font-medium'>Meal Plan</p>

@@ -15,9 +15,8 @@ const AddFoodDiary = () => {
     const [diaryForm,setDiaryForm] = useState({
         quantity:0,
         food_id:"",
-        type:getQuery
+        type:getQuery,
     });
-
 
     const fetchFoods = async () => {
         const { data } = await axios.get(`http://localhost:8080/api/food-diary/data`);
@@ -101,6 +100,7 @@ const AddFoodDiary = () => {
                         {foods?.map((food,idx) => (
                             <option key={idx} value={`${food?._id}`}>{food?.title}</option>
                         ))}
+                        <option value="custom">Custom food</option>
                     </select>
                 </div>
                 <div className="w-full flex flex-col gap-y-2">

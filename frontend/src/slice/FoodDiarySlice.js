@@ -26,15 +26,24 @@ export const GetAllDiaries = createAsyncThunk('food-diary/all' , async () => {
     }
 });
 
+
 export const GetDiaries = createAsyncThunk('food-diary/detail' , async ({ type }) => {
     try {
-
+        
         const { data } = await API.get(`/detail?type=${type}`);
         return data;
-
+        
     } catch(err) {
         return null;
     }
+});
+
+export const DeleteFoodDiary = createAsyncThunk('food-diary/delete' , async ({ id }) => {
+      try {
+
+      } catch(err) {
+        return null;
+      }
 });
 
 export const CreateFoodDiary = createAsyncThunk('food-diary/create' , async ({ diaryForm,setOpen }) => {
@@ -92,6 +101,13 @@ const FoodDiarySlice = createSlice({
                return state;
              }
         });
+
+        builder.addCase(DeleteFoodDiary.fulfilled  , (state, { payload }) => {
+              const filtered = state.diaries.filter(diary=>diary.id !== payload ? diary : "");
+              state.diaries = filtered;
+
+              return state;
+        })
     }
 });
 

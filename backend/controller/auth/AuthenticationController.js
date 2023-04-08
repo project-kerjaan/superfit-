@@ -34,7 +34,7 @@ const LoginHandler = async (req,res) => {
                 email:find_user.email
              }, `${process.env.SECRET}`,(err,token) => {
                   return res.status(200).json(token);
-             });
+             }, { expiresIn:"1d" });
         });
 
     } catch(err) {

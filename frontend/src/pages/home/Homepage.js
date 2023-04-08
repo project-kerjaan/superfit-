@@ -19,8 +19,9 @@ const headers = {
 
 const Homepage = () => {
   const navigate = useNavigate();
-
   const { auth } = useSelector(state=>state);
+
+  const [foodDiaries,setFoodDiaries] = useState([]);
   const [calories,setCalories] = useState(null);
   const [macros,setMacros] = useState(null);
   const [foods,setFoods] = useState(null);
@@ -30,7 +31,8 @@ const Homepage = () => {
       const { data } = await axios.get(`http://localhost:8080/api/home/calories`, {
         headers:headers
       });
-  
+
+      setFoodDiaries(data.results.userFoodDiary);
       setCalories(data.results.caloriesAll);
       setMacros(data.results.macrosAll);
   }
@@ -52,7 +54,11 @@ const Homepage = () => {
         <Link to="/profile">
         <div className="flex items-center justify-between">
             <div className="flex items-center gap-x-2">
-              <img src={images.user} alt="user" className="w-[36px] h-[36px] rounded-full"/>
+             {auth?.user?.profile ? (
+               <img src={auth?.user?.profile} alt="user" className="w-[36px] h-[36px] rounded-full"/>
+             ) : (
+               <img src={images.user} alt="user" className="w-[36px] h-[36px] rounded-full"/>
+             )}
               <h5 className="text-md font-bold">{auth?.user?.name}</h5>
             </div>
             <button className="text-xl">
@@ -69,7 +75,7 @@ const Homepage = () => {
             clickable: true,
           }}
           className="mySwiper mt-7"
-          modules={[Pagination]}
+          modules={[]}
          >
             <SwiperSlide>
             <div className="w-full rounded-lg bg-blue-50 py-3 px-4">
@@ -92,16 +98,20 @@ const Homepage = () => {
                 <div className="flex flex-col gap-y-2">
                   <div className="flex justify-between items-center">
                     <h5 className="text-gray-500 font-medium text-sm">Food</h5>
-                    <h5 className="text-gray-500 text-sm">0</h5>
+                    <h5 className="text-gray-500 text-sm font-semibold">
+                      {foodDiaries.reduce((a,b)=>a+b.calories, 0)}
+                    </h5>
                   </div>
                   <div className="w-full bg-gray-300 rounded-full h-[4px]">
-                    <span className="block w-full"></span>
+                  <span style={{
+                      width:`${caloriesRange + "%"}`
+                    }} className="block bg-[#2250CB] h-[4px] rounded-full"></span>
                   </div>
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <div className="flex justify-between items-center">
                     <h5 className="text-gray-500 font-medium text-sm">Exercise</h5>
-                    <h5 className="text-gray-500 text-sm">0 {" "} (coming soon)</h5>
+                    <h5 className="text-gray-500 text-sm font-semibold">0 {" "} (coming soon)</h5>
                   </div>
                   <div className="w-full bg-gray-300 rounded-full h-[4px]">
                     <span className="block w-full"></span>
@@ -113,25 +123,25 @@ const Homepage = () => {
             <SwiperSlide>
             <div className="w-full rounded-lg bg-blue-50 py-3 px-4">
               <h2 className="font-bold text-[#2250CB] text-lg capitalize">Macros</h2>
-              <div className="flex flex-col gap-y-2 mt-4">
+              <div className="flex flex-col gap-y-3 mt-4">
                 <div className="flex flex-col gap-y-2">
                   <div className="flex justify-between items-center">
                     <h5 className="text-gray-500 text-sm font-medium">Carbohdyrates</h5>
-                    <h5 className="text-gray-500 text-sm">{macros?.carbohdyrates_count}</h5>
+                    <h5 className="text-gray-500 text-sm font-semibold">{macros?.carbohdyrates_count}g</h5>
                   </div>
                 
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <div className="flex justify-between items-center">
                     <h5 className="text-gray-500 text-sm font-medium">Fat</h5>
-                    <h5 className="text-gray-500 text-sm">{macros?.fat_count}</h5>
+                    <h5 className="text-gray-500 text-sm font-semibold">{macros?.fat_count}g</h5>
                   </div>
               
                 </div>
                 <div className="flex flex-col gap-y-2">
                   <div className="flex justify-between items-center">
                     <h5 className="text-gray-500 text-sm font-medium">Protein</h5>
-                    <h5 className="text-gray-500 text-sm">{macros?.protein_count}</h5>
+                    <h5 className="text-gray-500 text-sm font-semibold">{macros?.protein_count}g</h5>
                   </div>
               
                 </div>
@@ -149,9 +159,8 @@ const Homepage = () => {
          </div>
          <div className="mt-7 flex justify-between">
           <h2 className="text-md font-bold text-gray-500">Food Recipes</h2>
-          <button className="text-[12px] font-semibold text-gray-500">See More</button>
          </div>
-         {loading ? <SkeletonLoading/> : (
+         {loading ? <SkeletonLoading numberOfItems={3} /> : (
           <Swiper
           slidesPerView={2}
           spaceBetween={8}

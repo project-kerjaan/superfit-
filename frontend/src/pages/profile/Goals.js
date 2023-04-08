@@ -9,7 +9,7 @@ const Goals = () => {
                 <Link to="/profile">
                  <i className="ri-arrow-left-line text-2xl"></i> 
                 </Link>
-                <h2 className='flex-1 mr-3 text-xl text-center font-bold mb-2 '>Recipe Details</h2>
+                <h2 className='flex-1 mr-7 text-xl text-center font-bold mb-2 '>Your Goals</h2>
             </div>
         </section>
     )

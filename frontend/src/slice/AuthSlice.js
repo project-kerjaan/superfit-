@@ -14,6 +14,7 @@ export const loginHandler = createAsyncThunk('auth/login' , async ({ loginForm, 
         const { data } = await API.post('/login' , loginForm);
 
         if(data) {
+            window.location.href = "/home";
             return data;
         }
       } catch(err) {
@@ -81,6 +82,22 @@ export const userSetting = createAsyncThunk('auth/userSetting' , async ({ boardi
    }
 });
 
+export const updateAvatar = createAsyncThunk('user/avatar' , async ({ file,username }) => {
+     try {
+        const { data } = await API.post("/update/avatar", { file,username } ,{
+            headers: {
+                Authorization:`Bearer ${JSON.parse(localStorage.getItem('token'))}`
+            }
+        });
+        if(data) {
+            return data;
+        }
+
+     } catch(err) {
+       return null;  
+     }
+});
+
 const AuthSlice = createSlice({
     name:'auth',
     initialState: {
@@ -107,6 +124,16 @@ const AuthSlice = createSlice({
 
             return state;
         });
+
+        builder.addCase(updateAvatar.fulfilled , (state, { payload }) => {
+            if(payload) {
+                state.token = payload;
+                state.user = jwtDecode(payload);
+                localStorage.setItem("token" , JSON.stringify(state.token));
+            }
+
+            return state;
+        })
     }
 });
 
